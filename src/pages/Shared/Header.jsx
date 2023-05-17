@@ -9,6 +9,7 @@ const Header = () => {
   const handleLogout = () => {
     logOut()
       .then(() => {})
+      
       .catch((err) => console.log(err));
   };
   const navItems = (

@@ -8,43 +8,52 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 
-
-
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element:<Main></Main>,
+    element: <Main></Main>,
     children: [
       {
         path: "/",
-        element:<Home></Home>
+        element: <Home></Home>,
       },
       {
         path: "/login",
-        element:<Login></Login>
+        element: <Login></Login>,
       },
       {
         path: "/signup",
-        element :<SignUp></SignUp>
-
+        element: <SignUp></SignUp>,
       },
       {
-        path:'/book/:id',
-        element:<BookService></BookService>,
-        loader: ({params})=>fetch(`http://localhost:5000/services/${params.id}`)
-
+        path: "/book/:id",
+        element: (
+          <PrivateRoutes>
+            <BookService></BookService>
+          </PrivateRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://new-car-doctor-server-2.vercel.app/services/${params.id}`
+          ),
       },
       {
-        path:'/checkout/:id',
-        element:<CheckOut></CheckOut>,
-        loader: ({params})=>fetch(`http://localhost:5000/services/${params.id}`)
+        path: "/checkout/:id",
+        element: <CheckOut></CheckOut>,
+        loader: ({ params }) =>
+          fetch(
+            `https://new-car-doctor-server-2.vercel.app/services/${params.id}`
+          ),
       },
       {
-           path:'/bookings',
-           element: <PrivateRoutes><Bookings></Bookings></PrivateRoutes>
-      }
-  ]
+        path: "/bookings",
+        element: (
+          <PrivateRoutes>
+            <Bookings></Bookings>
+          </PrivateRoutes>
+        ),
+      },
+    ],
   },
 ]);
 

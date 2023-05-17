@@ -1,8 +1,13 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/'
 
   const {signIn} = useContext(AuthContext);
 
@@ -12,10 +17,15 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+
     signIn(email, password)
     .then(result => {
       const user = result.user;
+     
       console.log(user);
+      navigate(from, {replace:true})
+      
+      
     })
     .catch (error => console.log(error));
     
@@ -63,6 +73,7 @@ const Login = () => {
               </div>
             </form>
             <p className="text-center">New to Car-doctor? <Link className="font-bold text-orange-600" to="/signup">Sign up</Link></p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>
